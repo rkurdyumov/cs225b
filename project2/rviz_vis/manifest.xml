@@ -1,0 +1,23 @@
+<package>
+  <description brief="rviz_vis">
+
+     rviz_vis
+
+  </description>
+  <author>Christina Apatow</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/rviz_vis</url>
+  <depend package="roscpp"/>
+  <depend package="std_msgs"/>
+  <depend package="tf"/>
+  <depend package="nav_msgs"/>
+  <depend package="laser_geometry"/>
+  <depend package="visualization_msgs"/>
+  <depend package="geometry_msgs"/>
+  <depend package="global_planner"/>
+
+
+</package>
+
+

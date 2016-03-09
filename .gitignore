@@ -1,0 +1,7 @@
+bin/
+build/
+lib/
+msg_gen/
+*.xlsx
+
+

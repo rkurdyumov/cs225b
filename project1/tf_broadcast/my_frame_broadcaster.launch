@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg="tf_broadcast" type="my_frame_broadcaster" name="my_frame_broadcaster" />
+
+</launch>

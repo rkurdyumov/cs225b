@@ -1,0 +1,33 @@
+Part I: Gradient Planner 
+Assuming that the robot was well- localized, we used the Gates basement map
+for map_server.  A navigation function was constructed for an arbitrary 2D
+configuration space in a grid.  The discretized map that we read in showed
+whether the space was occupied or not.  Subsequent to calculating a safe
+margin inflation and obstacle cost we used this as a basis to then implement
+the A* algorithm.  To actually obtain the path that we use, A* was
+implemented, however the Dijkstra algorithm was used to calculate each cells
+distance from its nearest obstacle.  Bilinear interpolation was used to
+calculate the gradient magnitude and orientation along the navigation
+function. 
+
+Part II: Local Obstacles 
+The provided map of the Gates basement only included the basic floor plan.  In
+order to account for local obstacles we took in sensor data from a laser scan
+in order to create a local occupancy grid.  This would account for and
+document the obstacles and the inflation around the robot.  
+
+Part III: Local Controller 
+In this section of the project, we wrote a program that takes the robot along
+the path produced by the gradient planner.  Since we now have to take local
+obstacles into account, the robot must be controlled based on the
+representation of local obstacles as previously mentioned.  The local
+controller receives a global path and goal pose at the beginning subsequent to
+run.  Dynamic robot pose information and a local obstacle map are also
+received.  Optimally, the robot will be able to use the global path as a guide
+for the local controller to actually find the goal without obstacle
+interference or crashing.  The robot has to surpass the obstacle and return to
+a desired trajectory.  Therefore, the local controller uses a trajectory
+rollout where each trajectory is scored according to our cost function and it
+is equipped with the decision-making ability to safely traverse an
+environment.
+

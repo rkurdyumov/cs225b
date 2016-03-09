@@ -1,0 +1,17 @@
+<package>
+  <description brief="map_odom">
+
+     map_odom
+
+  </description>
+  <author>Ruslan Kurdyumov, Drew Schmitt</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/map_odom</url>
+  <depend package="roscpp"/>
+  <depend package="tf"/>
+  <depend package="geometry_msgs"/>
+
+</package>
+
+

@@ -1,0 +1,24 @@
+<package>
+  <description brief="local_planner">
+
+     local_planner
+
+  </description>
+  <author>Ruslan Kurdyumov, Drew Schmitt</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/local_planner</url>
+  <depend package="roscpp"/>
+  <depend package="tf"/>
+  <depend package="std_msgs"/>
+  <depend package="visualization_msgs"/>
+  <depend package="geometry_msgs"/>
+  <depend package="laser_geometry"/>
+  <depend package="sensor_msgs"/>
+  <depend package="nav_msgs"/>
+  <depend package="global_planner"/>
+
+
+</package>
+
+

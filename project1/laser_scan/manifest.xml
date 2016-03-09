@@ -1,0 +1,19 @@
+<package>
+  <description brief="laser_scan">
+
+     laser_scan
+
+  </description>
+  <author>Drew Schmitt, Ruslan Kurdyumov</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/laser_scan</url>
+  <depend package="roscpp"/>
+  <depend package="tf"/>
+  <depend package="sensor_msgs"/>
+  <depend package="visualization_msgs"/>
+  <depend package="laser_geometry"/>
+
+</package>
+
+

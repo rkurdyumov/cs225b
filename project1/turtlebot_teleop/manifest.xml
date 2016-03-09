@@ -1,0 +1,17 @@
+<package>
+  <description brief="turtlebot_teleop">
+
+     Provides teleoperation using keyboard. 
+
+  </description>
+  <author>Ruslan Kurdyumov, Drew Schmitt</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/turtlebot_teleop</url>
+  <depend package="joy"/>
+  <depend package="geometry_msgs"/>
+  <depend package="roscpp"/>
+
+</package>
+
+

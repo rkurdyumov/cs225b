@@ -1,0 +1,69 @@
+CS225B Project 3 Summary
+Ruslan Kurdyumov
+Drew Schmitt
+
+For this project, we had to essentially rewrite the ROS amcl node.  The
+project involved several major milestones:
+1. Creating a PointCloud class to handle all basic particle filter point
+operations.
+2. Creating a motion model to update a robot pose based on odometry error
+characteristics
+3. Creating a laser scan sensor model to update the particle filter based on
+the p(z|x) from a likelihood field.
+4. Creating an AMCL class to handle the required updating, publishing and
+special cases (kidnapped robot).
+
+The PointCloud class handled all the repetitive operations we needed to do:
+uniformly and normally distributing points, taking means and variances, and so
+on.
+
+The motion model we implemented was based on the odometry error model
+presented in class.  We model robot motion as 3 separate discrete movement
+phases: a rotation, a translation, and a subsequent rotation.  Each of these
+naturally has some error associated with the movement, but we also have
+cross-correlated terms – longer translations lead to more rotational error.
+We model the change in each discrete movement as a Gaussian, with mean 0 and
+variance specified by the associated error.  Specifically, the variance for
+each discrete movement is given below:
+	var_rot1 = alpha1 * |delta_rot1| + alpha2 * |delta_trans|
+	var_trans = alpha3 * |delta_trans|
+	var_rot2 = alpha1 * |delta_rot2| + alpha2 * |delta_trans|
+We set the alpha's based on reasonable estimates: 
+	alpha1 = 1 deg / 360 deg
+	alpha2 = 1 deg/ 1 m
+	alpha3 = 6 cm / 1 m
+We then sample from each of these Gaussians to update an initial pose.
+
+The laser scan sensor model is based on a probabilistic weighting of each
+particle filter point based on our likelihood field.  The likelihood field is
+created using a wavefront propagation algorithm of obstacle distances in the
+global map.  Each grid cell is then assigned a probability of bouncing back a
+laser scan based on the distance to the closest obstacle.  We implemented a
+Gaussian function to assign probabilities – 1 if the cell has an obstacle, and
+smoothly rolling off to 0 as the nearest object distance increases.  When we
+request a sensor update to our particle filter, we loop over each particle,
+and for that particle, loop over some subset of the laser readings (to
+minimize computation time).  We check where the laser scan distance reading
+would fall in the likelihood field if projected from the current particle, and
+assign it a total probability based on the following equation:
+	P_tot = alpha_hit * P_hit + alpha_rand * P_rand + alpha_max * P_max
+P_hit is the probability described above – the laser reading actually
+corresponds to an obstacle on the map.  P_rand is a catch-all probability used
+to model random laser scan readings – effectively it serves to reduce the
+effect of P_hit so that slightly inferior particles aren't severely penalized.
+P_max is the probability of a max laser scan range reading (equal to 1 if
+laser reading = range max).  We chose the following parameters:
+	alpha_hit = 0.1
+	alpha_rand = 0.8
+	alpha_max = 0.1
+based on experimental results.
+
+The AMCL class handled all the hierarchical tasks.  It read in a map from the
+map server and generated a likelihood field, described above.  Since our
+likelihood field must expand past the input map dimensions to accommodate
+projected scan points outside our map, we create a new map with a constant
+buffer region.  The class performed motion model updates to our particle
+filter when the robot had moved more than 300mm or 10 degrees.  It also read
+incoming laser scans and updated the particle filter after a motion model
+update., which included resampling, updating the particle set size, publishing
+the map to odom transform, and visualization.
