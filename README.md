@@ -4,10 +4,10 @@ This repository contains the source code for CS225B, taught at Stanford in Fall 
 
 To summarize:
 
-   Project 1: ROS basics
-   Project 2: trajectory planning
-   Project 3: amcl (localization)
-   Project 4: GraphSLAM	
+	Project 1: ROS basics
+	Project 2: trajectory planning
+	Project 3: amcl (localization)
+	Project 4: GraphSLAM	
 
 Note the code was written for ROS Electric and does not use the current catkin build system; it is mostly here for reference.  I may port it in the future.
 
